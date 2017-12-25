@@ -11,15 +11,19 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 
 import com.balance.comparison.model.BalanceComparisonRequest;
+import com.balance.comparison.util.BalanceComparisonConstants;
+import com.balance.comparison.util.BalanceComparisonUtils;
 import com.balance.comparison.util.SourceMappingDTORepository;
 
 public class DataRetreivalService {
 
 	private static Logger LOG = Logger.getLogger(DataRetreivalService.class);
 
-	private final static int NUM_THREADS_FOR_DATA_RETERIVAL=2;
+	//as we compare against 2 sources
+	private final static int NUM_THREADS_FOR_DATA_RETRIEVAL=2;
 	
 	@Autowired
 	private SourceMappingDTORepository sourceMappingDTORepository;
@@ -28,7 +32,7 @@ public class DataRetreivalService {
 		// as we have 2 sources
 		LOG.info("inside DataReterivalService: ");
 
-		ExecutorService executorService = Executors.newFixedThreadPool(NUM_THREADS_FOR_DATA_RETERIVAL);
+		ExecutorService executorService = Executors.newFixedThreadPool(NUM_THREADS_FOR_DATA_RETRIEVAL);
 		List<String> sources = request.getSources();
 		List<Future<String>> retrievdFutureDataList = new ArrayList<Future<String>>();
 

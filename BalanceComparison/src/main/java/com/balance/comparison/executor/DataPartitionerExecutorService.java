@@ -11,6 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 
 import com.balance.comparison.model.BalanceComparisonRequest;
 import com.balance.comparison.util.BalanceComparisonUtils;
@@ -34,7 +35,8 @@ public class DataPartitionerExecutorService {
 	@Autowired
 	BalanceComparisonUtils balanceComparisonUtils;
 
-	private int numOfThreads= 2;
+	@Value("${num.threads.data.retrieval}")
+	private int numOfThreads;
 
 	public List<String> compareDataForAllPartitons(BalanceComparisonRequest request){
 
