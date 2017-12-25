@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+	<xs:element name="balanceComparison" type="balanceComparisonDTO" />
+
+	<xs:complexType name="balanceComparisonDTO">
+		<xs:sequence>
+			<xs:element type="xs:string" name="bankId" />
+			<xs:element name="transaction" type="transactionDTO" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="transactionDTO">
+		<xs:sequence>
+			<xs:element name="date" type="xs:long" />
+			<xs:element name="type" type="xs:string" />
+			<xs:element name="amount" type="xs:double" />
+		</xs:sequence>
+	</xs:complexType>
+
+</xs:schema>

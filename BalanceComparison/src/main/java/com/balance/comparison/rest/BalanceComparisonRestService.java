@@ -26,13 +26,13 @@ import com.balance.comparison.model.BalanceComparisonRequest;
  * http://localhost:8080/BalanceComparison/compareBalance
    http://localhost:8080/BalanceComparison/compareBalance
  *
- * {"name" : "abc"}
- 
+ // sample JSON request
  {
- "dateFrom":201712,
- "dateFrom":201712,
- "measure": "all"
- }
+	"dateFrom": 201703,
+	"dateTo": 201705,
+	"measure": "all",
+	"sources": ["icici", "sbi"]
+}
  *
  */
 

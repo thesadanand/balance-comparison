@@ -15,7 +15,7 @@ public class BalanceComparisonRequest {
 	private int dateFrom;
 	private int dateTo;
 	private String measure;
-	private List<String> sources = Arrays.asList("icici","sbi");
+	private List<String> sources ; // = Arrays.asList("icici","sbi");
 
 	
 	
@@ -56,6 +56,7 @@ public class BalanceComparisonRequest {
 	}
 
 	public void setSources(List<String> sources) {
-		this.sources = Arrays.asList("icici","sbi");
+//		this.sources = Arrays.asList("icici","sbi");
+		this.sources = sources;
 	}
 }

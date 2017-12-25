@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<balanceComparison>
+	<bankId>icici</bankId>
+	<transaction>
+		<date>201703</date>
+		<type>c</type>
+		<amount>100</amount>
+	</transaction>
+	<transaction>
+		<date>201703</date>
+		<type>c</type>
+		<amount>300</amount>
+	</transaction>
+	<transaction>
+		<date>201704</date>
+		<type>d</type>
+		<amount>200</amount>
+	</transaction>
+	<transaction>
+		<date>201704</date>
+		<type>c</type>
+		<amount>500</amount>
+	</transaction>
+</balanceComparison>

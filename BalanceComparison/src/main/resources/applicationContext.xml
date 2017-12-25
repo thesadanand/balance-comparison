@@ -20,6 +20,10 @@
 			</list>
 		</property>
 	</bean> -->
+	
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations" value="classpath:path/config.properties"></property>
+	</bean>
 
 	<bean id="sourceMappingDTORepository" class="com.balance.comparison.util.SourceMappingDTORepository"
 		init-method="loadInputData" />
