@@ -9,7 +9,34 @@
     			http://www.springframework.org/schema/context/spring-context-3.0.xsd
     			http://www.springframework.org/schema/util
     			http://www.springframework.org/schema/util/spring-util-3.0.xsd">
-	
-	<context:component-scan base-package="com.balance.comparison.rest"/>
+
+	<context:component-scan base-package="com.balance.comparison.rest" />
+<!-- 
+	<bean id="comparisonPropertiesConfigurer"
+		class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:config.properties</value>
+			</list>
+		</property>
+	</bean> -->
+
+	<bean id="sourceMappingDTORepository" class="com.balance.comparison.util.SourceMappingDTORepository"
+		init-method="loadInputData" />
+
+	<bean id="dataComparisonService" class="com.balance.comparison.executor.DataComparisonService">
+		<property name="sourceMappingDTORepository" ref="sourceMappingDTORepository"/>
+	</bean>
+
+	<bean id="dataRetrievalService" class="com.balance.comparison.executor.DataRetreivalService" />
+
+	<bean id="dataPartitionerExecutorService"
+		class="com.balance.comparison.executor.DataPartitionerExecutorService">
+		<property name="dataRetreivalExecutorService" ref="dataRetrievalService" />
+		<property name="dataComparisonExecutorService" ref="dataComparisonService" />
+	</bean>
+
+	<bean id="balanceComparisonUtils" class="com.balance.comparison.util.BalanceComparisonUtils" ></bean>
+
 
 </beans>
