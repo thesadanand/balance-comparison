@@ -9,10 +9,9 @@ import org.apache.log4j.Logger;
 
 import com.balance.comparison.dto.BalanceComparisonDTO;
 import com.balance.comparison.dto.TransactionDTO;
-import com.balance.comparison.util.BalanceComparisonConstants;
 import com.balance.comparison.util.SourceMappingDTORepository;
 
-public class DataReterivalServiceCallable implements Callable<String> { 
+public class DataReterivalServiceCallable implements Callable<Map<String, Double>> { 
 
 
 	private static Logger LOG = Logger.getLogger(DataReterivalServiceCallable.class);
@@ -33,7 +32,7 @@ public class DataReterivalServiceCallable implements Callable<String> {
 		this.sourceMappingDTORepository = sourceMappingDTORepository2;
 	}
 
-	public String call() throws Exception {
+	public Map<String, Double> call() throws Exception {
 		//do a map lookup and get data for that source;
 		// aggregate the data;
 		String str = Thread.currentThread().getName().concat(": got data for source: "+source+" for rptPrd: "+this.rptPrd);
@@ -42,11 +41,18 @@ public class DataReterivalServiceCallable implements Callable<String> {
 		BalanceComparisonDTO balanceComparisonDTO =  sourceMappingDTORepository.getDtoMapForSource(source);
 
 		Map<String, Double> aggregatedData = aggregateData(balanceComparisonDTO.getTransaction());
-		LOG.info("aggregated data size for source: "+source+ "rpt prd: "+rptPrd+"  "+aggregatedData);
-		return str;
+		LOG.info("aggregated data size for source: "+source+ "rpt prd: "+rptPrd+"  "+aggregatedData.toString());
+		LOG.info("aggregated map: "+aggregatedMap.toString());
+//		return str;
+		return aggregatedMap;
 
 	}
 
+	/**
+	 * aggregate the transactions for one reporting period
+	 * @param transactionDTOList
+	 * @return Map
+	 */
 	private Map<String, Double> aggregateData(List<TransactionDTO> transactionDTOList) {
 
 		String creditTransctionkey = source+"~"+rptPrd+"~c";

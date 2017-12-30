@@ -5,9 +5,11 @@ import java.util.concurrent.Callable;
 
 import org.apache.log4j.Logger;
 
+import com.balance.comparison.model.AggregatedDataDTO;
 import com.balance.comparison.model.BalanceComparisonRequest;
+import com.balance.comparison.model.ComparedDataDTO;
 
-public class DataPartitionerCallable implements Callable<String> {
+public class DataPartitionerCallable implements Callable<ComparedDataDTO> {
 
 	private static Logger LOG = Logger.getLogger(DataPartitionerCallable.class);
 
@@ -28,28 +30,31 @@ public class DataPartitionerCallable implements Callable<String> {
 		this.rptPrd = rptPrd;
 	}
 
-	public String call() throws Exception {
+	public ComparedDataDTO call() throws Exception {
 
 		LOG.info("Retrieving and comparing data for reporting period : "+this.rptPrd);
 		
-		List<String> aggregatedData = retrievData();
+		List<AggregatedDataDTO> aggregatedDataList = retrievDataForEachPartition();
 
 		//iterate though this list and crate a comparison request
-		for (String string : aggregatedData) {
+		/*for (AggregatedDataDTO dto: aggregatedData) {
 			// create a new comparison request object and pass to compare data
 			// it will return one single compared data object
 			//			compareData(string);
-		}
-
-		return compareData(aggregatedData);
+		}*/
+		
+		
+		return compareDataForEachPartiton(aggregatedDataList);
+	
 	}
 
-	private String compareData(List<String> aggregatedData) {
-		return comparisonService.compareData(aggregatedData);
-	}
 
-	private List<String> retrievData() {
-		return dataRetrievalService.getAggregatedData(request, rptPrd);
+	private List<AggregatedDataDTO> retrievDataForEachPartition() {
+		return dataRetrievalService.retrieveData(request, rptPrd);
 	}	
+
+	private ComparedDataDTO compareDataForEachPartiton(List<AggregatedDataDTO> aggregatedDataList) {
+		return comparisonService.compareData(aggregatedDataList);
+	}
 
 }

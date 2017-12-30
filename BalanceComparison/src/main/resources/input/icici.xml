@@ -14,7 +14,12 @@
 	<transaction>
 		<date>201704</date>
 		<type>d</type>
-		<amount>200</amount>
+		<amount>250</amount>
+	</transaction>
+	<transaction>
+		<date>201704</date>
+		<type>d</type>
+		<amount>250</amount>
 	</transaction>
 	<transaction>
 		<date>201704</date>

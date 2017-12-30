@@ -36,7 +36,7 @@ public class SourceMappingDTORepository {
 	private final Map<String, BalanceComparisonDTO> dtoMap = new ConcurrentHashMap<String, BalanceComparisonDTO>();
 
 		@Value(value="${config.approch}")
-	private String configurationApproch; // = "XML";
+	private String configurationApproch;
 
 	public void loadInputData(){
 		LOG.info("configuration approach used is: "+configurationApproch);
