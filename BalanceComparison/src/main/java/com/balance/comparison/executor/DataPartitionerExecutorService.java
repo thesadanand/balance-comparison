@@ -14,13 +14,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
 import com.balance.comparison.model.BalanceComparisonRequest;
+import com.balance.comparison.model.ComparedDataDTO;
 import com.balance.comparison.util.BalanceComparisonUtils;
 
 /**
- * 
  * @author Tanu
- *
  */
+
 public class DataPartitionerExecutorService {
 
 
@@ -38,24 +38,24 @@ public class DataPartitionerExecutorService {
 	@Value("${num.threads.data.retrieval}")
 	private int numOfThreads;
 
-	public List<String> compareDataForAllPartitons(BalanceComparisonRequest request){
+	public List<ComparedDataDTO> compareDataForAllPartitons(BalanceComparisonRequest request){
 
 		// get all reporting periods for the given from and to date range
 		List<String> rptPrds = balanceComparisonUtils.getRrpPrd(request.getDateFrom(), request.getDateTo());
 		LOG.info("Total Number of Reporting Periods: "+rptPrds);
 
-		
+
 		// call comparison service on each partion map returned 
 		LOG.info("comparing all partitions with "+numOfThreads+" threads");
 
-		
-		// call data retiival for each partions using n threads
+
+		// call data retrieval for each partitions using n threads
 		ExecutorService executorService = Executors.newFixedThreadPool(numOfThreads);
-		List<Future<String>> compareFutureList = new ArrayList<Future<String>>();
+		List<Future<ComparedDataDTO>> compareFutureList = new ArrayList<Future<ComparedDataDTO>>();
 		for(String rptPrd: rptPrds){
-			Callable<String> callable = 
+			Callable<ComparedDataDTO> callable = 
 					new DataPartitionerCallable(dataRetreivalExecutorService, dataComparisonExecutorService, rptPrd,request);
-			Future<String> futureResponse = executorService.submit(callable);
+			Future<ComparedDataDTO> futureResponse = executorService.submit(callable);
 			compareFutureList.add(futureResponse);
 		}
 
@@ -72,8 +72,8 @@ public class DataPartitionerExecutorService {
 				break;
 		}
 
-		List<String> futurListOutput = new ArrayList<String>();
-		for (Future<String> future : compareFutureList) {
+		List<ComparedDataDTO> futurListOutput = new ArrayList<ComparedDataDTO>();
+		for (Future<ComparedDataDTO> future : compareFutureList) {
 			try {
 				futurListOutput.add(future.get());
 			} catch (InterruptedException e) {
@@ -85,7 +85,6 @@ public class DataPartitionerExecutorService {
 			}
 		}
 		return futurListOutput;
-
 	}
 
 	public DataRetreivalService getDataRetreivalExecutorService() {
@@ -105,7 +104,5 @@ public class DataPartitionerExecutorService {
 			DataComparisonService dataComparisonExecutorService) {
 		this.dataComparisonExecutorService = dataComparisonExecutorService;
 	}
-
-
 
 }

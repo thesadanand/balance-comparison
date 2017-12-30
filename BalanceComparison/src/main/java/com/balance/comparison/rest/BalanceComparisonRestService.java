@@ -13,11 +13,14 @@ import javax.ws.rs.core.Response;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.balance.comparison.executor.DataPartitionerExecutorService;
 import com.balance.comparison.model.BalanceComparisonRequest;
+import com.balance.comparison.model.BalanceComparisonResponse;
+import com.balance.comparison.model.ComparedDataDTO;
 
 /**
  * rest web-service servlet class 
@@ -60,10 +63,21 @@ public class BalanceComparisonRestService {
 		// call compare all partioon on datapartition service
 		// this will return a final aggregated map 
 		
-		List<String> comparedData = dataPartitionerExecutorService.compareDataForAllPartitons(clientRequest);
+		List<ComparedDataDTO> comparedData = dataPartitionerExecutorService.compareDataForAllPartitons(clientRequest);
 		LOG.info("final compared Data set:  "+comparedData);
-		return Response.status(200).entity("hello world: "+clientRequest.getName()).build();
+		BalanceComparisonResponse response = buildResponseObject(comparedData);
+		return Response.status(200).entity(response).build();
+//		return Response.status(200).entity("hello world: This project is WIP ").build();
 		
+	}
+
+	private BalanceComparisonResponse buildResponseObject(
+			List<ComparedDataDTO> comparedData) {
+		BalanceComparisonResponse response = new BalanceComparisonResponse();
+		response.setResponseCode(HttpStatus.OK.value());
+		response.setResponseMessage("SUCCESS");
+		response.setResultData(comparedData);
+		return response;
 	}
 
 	public void setDataPartitionerExecutorService(
