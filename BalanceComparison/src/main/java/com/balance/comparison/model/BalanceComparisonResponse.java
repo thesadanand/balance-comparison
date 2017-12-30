@@ -1,6 +1,5 @@
 package com.balance.comparison.model;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class BalanceComparisonResponse {

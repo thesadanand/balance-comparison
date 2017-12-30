@@ -82,7 +82,7 @@ public class ComparedDataDTO {
 		this.source2AggreBalance = source2AggreBalance;
 	}
 
-	
+
 	@Override
 	public String toString() {
 		return "ComparedDataDTO [sourceOne=" + sourceOne + ", sourceTwo="
@@ -92,6 +92,6 @@ public class ComparedDataDTO {
 				+ source2AggreBalance + ", balanceDiff=" + balanceDiff
 				+ ", balanceDiffPerct=" + balanceDiffPerct + "]";
 	}
-	
-	
+
+
 }

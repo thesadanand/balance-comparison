@@ -2,14 +2,14 @@ package com.balance.comparison.model;
 
 import java.util.Map;
 
-public class AggregatedDataDTO {
+public class AggregatedDataDTO { 
 
 	private String Source;
-	
+
 	private String rptPrd;
-	
+
 	private String transactionType;
-	
+
 	private Map<String, Double> dataMap;
 
 	public String getSource() {
@@ -50,5 +50,5 @@ public class AggregatedDataDTO {
 				+ ", transactionType=" + transactionType + ", dataMap="
 				+ dataMap.toString() + "]";
 	}
-	
+
 }
